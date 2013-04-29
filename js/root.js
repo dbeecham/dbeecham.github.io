@@ -349,7 +349,11 @@ var god = function (settings) {
         objects[i] = object(models.icosphere2,
                             textures.wireframe0,
                             fixedVector(),
-                            linearVector(),
+                            vector(
+                                fixed(),
+                                linear(-0.005),
+                                fixed()
+                            ),
                             fixedVector(1));
         i += 1;
 
@@ -363,12 +367,13 @@ var god = function (settings) {
             for (i; i < (j + numObjects); i += 1) {
                 objects[i] = object(models.cube,
                                     textures.wireframe1,
-                                    orbitalVector(radius, i * angle, 0.01, fixed(0.5)),
+                                    orbitalVector(radius, i * angle, 0.01, cos(0, 0.01, 0.5, 0)),
                                     vector(fixed(), linear(-0.02), linear(-0.01)),
                                     fixedVector(0.624));
             }
         }());
 
+        // First circle mirror
         (function () {
             var numObjects = 4,
                 j = i,
@@ -378,12 +383,13 @@ var god = function (settings) {
             for (i; i < (j + numObjects); i += 1) {
                 objects[i] = object(models.cube,
                                     textures.wireframe1,
-                                    orbitalVector(radius, (angle / 2) + i * angle, 0.01, fixed(-0.5)),
+                                    orbitalVector(radius, (angle / 2) + i * angle, 0.01, sin(0, 0.01, 0.5, 0)),
                                     vector(fixed(), linear(-0.02), linear(-0.01)),
                                     fixedVector(0.624));
             }
         }());
 
+        // Second circle
         (function () {
             var numObjects = 4,
                 j = i,
@@ -393,12 +399,13 @@ var god = function (settings) {
             for (i; i < (j + numObjects); i += 1) {
                 objects[i] = object(models.icosphere1,
                                     textures.wireframe2,
-                                    orbitalVector(radius, (angle / 3) + i * angle, 0.01, fixed(-1.3)),
+                                    orbitalVector(radius, (angle / 3) + i * angle, -0.004, fixed(-1.3)),
                                     vector(fixed(), linear(-0.02), linear(-0.01)),
                                     fixedVector(0.389));
             }
         }());
 
+        // Third circle
         (function () {
             var numObjects = 4,
                 j = i,
@@ -408,12 +415,13 @@ var god = function (settings) {
             for (i; i < (j + numObjects); i += 1) {
                 objects[i] = object(models.icosphere1,
                                     textures.wireframe2,
-                                    orbitalVector(radius, (angle / 3) + i * angle, 0.01, fixed(1.3)),
+                                    orbitalVector(radius, (angle / 3) + i * angle, -0.01, fixed(1.3)),
                                     vector(fixed(), linear(-0.02), linear(-0.01)),
                                     fixedVector(0.389));
             }
         }());
 
+        // Third circle mirror
         (function () {
             var numObjects = 4,
                 j = i,
@@ -425,7 +433,7 @@ var god = function (settings) {
                                     textures.wireframe3,
                                     orbitalVector(radius, (angle / 3) + i * angle, 0.01, fixed(2.3)),
                                     vector(fixed(), linear(-0.02), linear(-0.01)),
-                                    fixedVector(0.389));
+                                    sinVector(0, 0.005, 0.2, 0.389));
             }
         }());
 
