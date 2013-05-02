@@ -17,9 +17,7 @@ var god = function (settings) {
         camera,
         renderer,
         object,
-        addToScene,
         vector,
-        icosahedron,
         fixed,
         orbitalVector,
         cube,
@@ -35,9 +33,7 @@ var god = function (settings) {
         fixedVector,
         linearVector,
         sinVector,
-        cosVector,
-        numLoadedObjects = 0,
-        numTotalObjects = 14;
+        cosVector;
     // ===============
     // Local variables }}}
     // ===============
@@ -46,14 +42,14 @@ var god = function (settings) {
     // ===============
     // Default variables {{{
     // ===============
-    settings        = (typeof settings !== 'undefined' ? settings : {});
-    settings.fov    = (typeof settings.fov !== 'undefined' ? settings.fov : 75);
-    settings.near   = (typeof settings.near !== 'undefined' ? settings.near : 0.1);
-    settings.far    = (typeof settings.far !== 'undefined' ? settings.far : 1000);
-    settings.width  = (typeof settings.width !== 'undefined' ? settings.width : 800);
-    settings.height = (typeof settings.height !== 'undefined' ? settings.height : 600);
-    settings.replaceHTML = (typeof settings.replaceHTML !== 'undefined' ? settings.replaceHTML : true);
-    settings.parent = (typeof settings.parent !== 'undefined' ? settings.parent : document.body);
+    settings             = (settings             !== 'undefined' ? settings :             {});
+    settings.fov         = (settings.fov         !== 'undefined' ? settings.fov :         75);
+    settings.near        = (settings.near        !== 'undefined' ? settings.near :        0.1);
+    settings.far         = (settings.far         !== 'undefined' ? settings.far :         1000);
+    settings.width       = (settings.width       !== 'undefined' ? settings.width :       800);
+    settings.height      = (settings.height      !== 'undefined' ? settings.height :      600);
+    settings.replaceHTML = (settings.replaceHTML !== 'undefined' ? settings.replaceHTML : true);
+    settings.parent      = (settings.parent      !== 'undefined' ? settings.parent :      document.body);
     // ===============
     // Default variables }}}
     // ===============
@@ -66,8 +62,8 @@ var god = function (settings) {
     linear = function (k, m) { // {{{
 
         // Default values
-        m = (typeof m !== 'undefined' ? m : 0);
-        k = (typeof k !== 'undefined' ? k : 0.01);
+        m = (m !== 'undefined' ? m : 0);
+        k = (k !== 'undefined' ? k : 0.01);
 
         return function () {
             m += k;
@@ -80,8 +76,8 @@ var god = function (settings) {
         var v;
 
         // Default values
-        m = (typeof m !== 'undefined' ? m : 0);
-        k = (typeof k !== 'undefined' ? k : 0.01);
+        m = (m !== 'undefined' ? m : 0);
+        k = (k !== 'undefined' ? k : 0.01);
 
         v = vector(
             linear(k, m),
@@ -98,7 +94,7 @@ var god = function (settings) {
     fixed = function (m) { // {{{
 
         // Default values
-        m = (typeof m !== 'undefined' ? m : 0);
+        m = (m !== 'undefined' ? m : 0);
 
 
         return function () {
@@ -111,7 +107,7 @@ var god = function (settings) {
         var v;
 
         // Default values
-        m = (typeof m !== 'undefined' ? m : 0);
+        m = (m !== 'undefined' ? m : 0);
 
         v = vector(
             fixed(m),
@@ -130,9 +126,9 @@ var god = function (settings) {
         var v = new THREE.Vector3();
 
         // Default values
-        funcX = (typeof funcX !== 'undefined' ? funcX : function () { return 0; });
-        funcY = (typeof funcY !== 'undefined' ? funcY : function () { return 0; });
-        funcZ = (typeof funcZ !== 'undefined' ? funcZ : function () { return 0; });
+        funcX = (funcX !== 'undefined' ? funcX : function () { return 0; });
+        funcY = (funcY !== 'undefined' ? funcY : function () { return 0; });
+        funcZ = (funcZ !== 'undefined' ? funcZ : function () { return 0; });
 
         return function () {
             v.x = funcX();
@@ -147,10 +143,10 @@ var god = function (settings) {
     sin = function (angle, velocity, k, m) { // {{{
 
         // Default values
-        angle = (typeof angle !== 'undefined' ? angle : 0);
-        velocity = (typeof velocity !== 'undefined' ? velocity : 0.01);
-        k = (typeof k !== 'undefined' ? k : 1);
-        m = (typeof m !== 'undefined' ? m : 0);
+        angle = (angle !== 'undefined' ? angle : 0);
+        velocity = (velocity !== 'undefined' ? velocity : 0.01);
+        k = (k !== 'undefined' ? k : 1);
+        m = (m !== 'undefined' ? m : 0);
 
         return function () {
             angle += velocity;
@@ -163,10 +159,10 @@ var god = function (settings) {
         var v;
 
         // Default values
-        angle = (typeof angle !== 'undefined' ? angle : 0);
-        velocity = (typeof velocity !== 'undefined' ? velocity : 0.01);
-        k = (typeof k !== 'undefined' ? k : 1);
-        m = (typeof m !== 'undefined' ? m : 0);
+        angle = (angle !== 'undefined' ? angle : 0);
+        velocity = (velocity !== 'undefined' ? velocity : 0.01);
+        k = (k !== 'undefined' ? k : 1);
+        m = (m !== 'undefined' ? m : 0);
 
         v = vector(
             sin(angle, velocity, k, m),
@@ -182,10 +178,10 @@ var god = function (settings) {
     cos = function (angle, velocity, k, m) { // {{{
 
         // Default values
-        angle = (typeof angle !== 'undefined' ? angle : 0);
-        velocity = (typeof velocity !== 'undefined' ? velocity : 0.01);
-        k = (typeof k !== 'undefined' ? k : 1);
-        m = (typeof m !== 'undefined' ? m : 0);
+        angle = (angle !== 'undefined' ? angle : 0);
+        velocity = (velocity !== 'undefined' ? velocity : 0.01);
+        k = (k !== 'undefined' ? k : 1);
+        m = (m !== 'undefined' ? m : 0);
 
         return function () {
             angle += velocity;
@@ -198,10 +194,10 @@ var god = function (settings) {
         var v;
 
         // Default values
-        angle = (typeof angle !== 'undefined' ? angle : 0);
-        velocity = (typeof velocity !== 'undefined' ? velocity : 0.01);
-        k = (typeof k !== 'undefined' ? k : 1);
-        m = (typeof m !== 'undefined' ? m : 0);
+        angle = (angle !== 'undefined' ? angle : 0);
+        velocity = (velocity !== 'undefined' ? velocity : 0.01);
+        k = (k !== 'undefined' ? k : 1);
+        m = (m !== 'undefined' ? m : 0);
 
         v = vector(
             cos(angle, velocity, k, m),
@@ -219,10 +215,10 @@ var god = function (settings) {
         var v;
 
         // Default values
-        radius = (typeof radius !== 'undefined' ? radius : 1);
-        angle = (typeof angle !== 'undefined' ? angle : 0);
-        velocity = (typeof velocity !== 'undefined' ? velocity : 0.01);
-        funcTop = (typeof funcTop !== 'undefined' ? funcTop : function () { return 0; });
+        radius = (radius !== 'undefined' ? radius : 1);
+        angle = (angle !== 'undefined' ? angle : 0);
+        velocity = (velocity !== 'undefined' ? velocity : 0.01);
+        funcTop = (funcTop !== 'undefined' ? funcTop : function () { return 0; });
 
         v = vector(
             sin(angle, velocity, radius),
@@ -349,11 +345,7 @@ var god = function (settings) {
         objects[i] = object(models.icosphere2,
                             textures.wireframe0,
                             fixedVector(),
-                            vector(
-                                fixed(),
-                                linear(-0.005),
-                                fixed()
-                            ),
+                            vector(fixed(), linear(-0.005), fixed()),
                             fixedVector(1));
         i += 1;
 
@@ -365,11 +357,14 @@ var god = function (settings) {
                 angle = Math.PI * 2 / numObjects;
 
             for (i; i < (j + numObjects); i += 1) {
-                objects[i] = object(models.cube,
-                                    textures.wireframe1,
-                                    orbitalVector(radius, i * angle, 0.01, cos(0, 0.01, 0.5, 0)),
-                                    vector(fixed(), linear(-0.02), linear(-0.01)),
-                                    fixedVector(0.624));
+
+                objects[i] = object(
+                    models.cube,
+                    textures.wireframe1,
+                    orbitalVector(radius, i * angle, 0.01, cos(0, 0.01, 0.5, 0)),
+                    vector(fixed(), linear(-0.02), linear(-0.01)),
+                    fixedVector(0.624)
+                );
             }
         }());
 
