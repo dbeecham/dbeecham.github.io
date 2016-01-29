@@ -15,7 +15,7 @@ var addQuanta = function (e) {
     'use strict';
     var spread = document.getElementById("spread").value;
     var k = document.getElementById("k").value;
-    quantas.push({x: e.offsetX, y: e.offsetY, spread: spread, k: k});
+    quantas.push({x: e.offsetX, y: e.offsetY, spread: parseInt(spread), k: parseInt(k)});
     console.log(quantas);
 };
 
@@ -41,7 +41,12 @@ var energyFromQuanta = function (quanta, x, y) {
     var k = quanta.k;
     var dx = x - quanta.x;
     var dy = y - quanta.y;
-    var norm = Math.sqrt(dx * dx + dy * dy);
+    var norm;
+    if (document.getElementById("squared").checked) {
+        norm = dx * dx + dy * dy;
+    } else {
+        norm = Math.sqrt(dx * dx + dy * dy);
+    }
     return k * Math.exp(-norm / spread) / spread;
 };
 
@@ -67,6 +72,20 @@ var draw = function () {
         });
     });
 };
+
+
+function animate() {
+    'use strict';
+    if (document.getElementById("animate").checked) {
+        quantas = _.map(quantas, function (quanta) {
+            return {x: quanta.x, y: quanta.y, k: quanta.k, spread: quanta.spread + 0.5};
+        });
+    }
+    setTimeout(animate, 100);
+}
+animate();
+
+document.getElementById("refresh").onclick = draw;
 
 var lastSeenLength = 0;
 function loop() {
