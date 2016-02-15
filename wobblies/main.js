@@ -64,6 +64,25 @@ var rungekutta = function(differential, y, timestep) {
 }
 
 var differential = function(balls) {
+    var x;
+    var y;
+    var vx;
+    var vy; 
+    var type; 
+    var forcex; 
+    var forcey; 
+    var otherx; 
+    var othery; 
+    var othervx; 
+    var othervy; 
+    var dx; 
+    var dy;
+    var distance; 
+    var normalx; 
+    var normaly; 
+    var force;
+
+
     returnballs = balls.slice(0);
     if (balls.length % 5 != 0) {
         console.log(balls);
@@ -71,42 +90,41 @@ var differential = function(balls) {
     }
 
     for (i = 0; i < balls.length; i+=5) {
-
-        var x = balls[i];
-        var y = balls[i+1];
-        var vx = balls[i+2];
-        var vy = balls[i+3];
-        var type = balls[i+4];
-        var forcex = -vx*0.3;
-        var forcey = -vy*0.3;
+        x = balls[i];
+        y = balls[i+1];
+        vx = balls[i+2];
+        vy = balls[i+3];
+        type = balls[i+4];
+        forcex = -vx*0.3;
+        forcey = -vy*0.3;
 
         for (j = 0; j < balls.length; j+=5) {
             if (i === j) {
                 continue;
             }
 
-            var otherx = balls[j];
-            var othery = balls[j+1];
-            var othervx = balls[j+2];
-            var othervy = balls[j+3];
+            otherx = balls[j];
+            othery = balls[j+1];
+            othervx = balls[j+2];
+            othervy = balls[j+3];
 
-            var dx = otherx - x;
-            var dy = othery - y;
-            var distance = Math.sqrt(dx * dx + dy * dy);
-            var normalx = dx / distance;
-            var normaly = dy / distance;
+            dx = otherx - x;
+            dy = othery - y;
+            distance = Math.sqrt(dx * dx + dy * dy);
+            normalx = dx / distance;
+            normaly = dy / distance;
 
-            var force = -8*Math.exp(-(distance)/10);
-            forcex = forcex + force * normalx;
-            forcey = forcey + force * normaly;
+            force = -10*Math.exp(-(distance)/20);
+            forcex += force * normalx;
+            forcey += force * normaly;
 
             if (type != balls[j+4]) {
                 continue;
             }
 
-            force = Math.exp(-(distance-20)/20);
-            forcex = forcex + force * normalx;
-            forcey = forcey + force * normaly;
+            force = 10*Math.exp(-Math.abs(distance-40)^2/10);
+            forcex += force * normalx;
+            forcey += force * normaly;
 
         }
 
@@ -116,6 +134,7 @@ var differential = function(balls) {
         returnballs[i+3] = forcey;
         returnballs[i+4] = 0;
     }
+
     return returnballs;
 }
 
