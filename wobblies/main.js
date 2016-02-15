@@ -12,10 +12,46 @@ canvas.onmousedown = function(e) {
 
 function draw() {
     context.fillStyle = "#FFFFFF";
+    context.strokeStyle = "#000000";
+    context.lineWidth = 5;
     context.fillRect(0, 0, 800, 600);
     context.fillStyle = "#000000";
     for (i = 0; i < balls.length; i += 5) {
-        context.fillRect(balls[i], balls[i+1], 10, 10);
+        var x = balls[i];
+        var y = balls[i+1];
+        var vx = balls[i+2];
+        var vy = balls[i+3];
+        var type = balls[i+4];
+        for (j = 0; j < balls.length; j += 5) {
+            if (i === j) {
+                continue;
+            }
+
+            var othertype = balls[j+4];
+
+            if (type !== othertype) {
+                continue;
+            }
+
+            var otherx = balls[j];
+            var othery = balls[j+1];
+            var othervx = balls[j+2];
+            var othervy = balls[j+3];
+
+            var dx = otherx - x;
+            var dy = othery - y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 40) {
+                context.beginPath();
+                context.moveTo(x, y);
+                context.lineTo(otherx, othery);
+                context.stroke();
+            }
+
+        }
+        context.beginPath();
+        context.arc(x, y, 5, 0, 2*Math.PI);
+        context.fill();
     }
 }
 
