@@ -122,7 +122,7 @@ var differential = function(balls) {
                 continue;
             }
 
-            force = 10*Math.exp(-Math.abs(distance-40)^2/10);
+            force = 40*Math.exp(-Math.abs(distance-40)^2/10);
             forcex += force * normalx;
             forcey += force * normaly;
 
